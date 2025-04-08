@@ -1,0 +1,42 @@
+Technical Qualification Requirements
+Section 1.1
+
+1. Experience:
+   - Minimum 5 years of experience in similar projects
+   - Successfully completed at least 3 projects of similar nature and complexity
+   - Each project value should be at least INR 50 crores
+
+2. Key Personnel:
+   - Project Manager: 15 years experience in infrastructure projects
+   - Technical Lead: 10 years experience in relevant field
+   - Quality Manager: 8 years experience in quality control
+
+Financial Qualification Requirements
+Section 2.1
+
+1. Turnover:
+   - Average annual turnover of INR 100 crores in last 3 financial years
+   - Net worth should be positive in last 3 years
+   - Working capital of minimum INR 25 crores
+
+2. Banking Requirements:
+   - Bank solvency certificate of INR 50 crores
+   - Credit line facility of INR 25 crores
+
+Joint Venture (JV) Criteria
+Section 3.1
+
+1. JV Formation:
+   - Maximum 3 partners allowed
+   - Lead partner must have minimum 51% stake
+   - Other partners must have minimum 26% stake each
+
+2. Technical Requirements for JV:
+   - Lead partner must meet 60% of technical criteria
+   - Other partners must meet 30% of technical criteria
+   - Combined JV must meet 100% of requirements
+
+3. Financial Requirements for JV:
+   - Lead partner must meet 60% of financial criteria
+   - Other partners must meet 30% of financial criteria
+   - All partners jointly must meet 100% of requirements

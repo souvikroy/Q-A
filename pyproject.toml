@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "[uch] q&a"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.3.23"
+langchain-openai = "^0.3.12"
+langchain-text-splitters = "^0.3.8"
+dotenv = "^0.9.9"
+langchain-community = "^0.3.21"
+wheel = "^0.45.1"
+faiss-cpu = "^1.10.0"
+fais = "^0.0.18"
+pymongo = "^4.12.0"
+streamlit = "^1.44.1"
+pypdf = "^5.4.0"
+watchdog = "^6.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
