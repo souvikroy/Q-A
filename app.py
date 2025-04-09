@@ -7,13 +7,12 @@ import tempfile
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.schema import Document  # Import LangChain's Document class
 
 # Load environment variables
 load_dotenv()
 
 # Get OpenAI API key from environment
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
-
 # Set page config
 st.set_page_config(
     page_title="Document Analysis AI",
@@ -35,6 +34,7 @@ def process_documents(uploaded_files: list[UploadedFile]):
     try:
         with st.status("Processing documents...", expanded=True) as status:
             all_chunks = []
+            chunker = DocumentChunker()  # Initialize the custom DocumentChunker
 
             for uploaded_file in uploaded_files:
                 # Create a temporary file for each uploaded PDF file
@@ -46,22 +46,25 @@ def process_documents(uploaded_files: list[UploadedFile]):
                 status.write(f"Loading document: {uploaded_file.name}...")
                 loader = PyPDFLoader(temp_paths[-1])
                 documents = loader.load()
-                for doc in documents:
-                    doc.metadata.update({"title": uploaded_file.name})
 
-                # Chunk the document using LangChain's RecursiveCharacterTextSplitter
-                status.write(f"Chunking document: {uploaded_file.name}...")
-                text_splitter = RecursiveCharacterTextSplitter(
-                    chunk_size=1000,  # Maximum size of each chunk
-                     chunk_overlap=200  # Overlap between chunks
-                )
-                chunks = text_splitter.split_documents(documents)
-                all_chunks.extend(chunks)
+                # Extract text from the documents
+                for doc in documents:
+                    # Check if document_text is empty
+                    if not doc.page_content.strip():
+                        status.write(f"⚠️ No text found in {uploaded_file.name}. Skipping...")
+                        continue
+
+                    # Chunk the document using the custom DocumentChunker
+                    status.write(f"Chunking document: {uploaded_file.name}... {doc.metadata}")
+                    chunks = chunker.chunk_document(doc.page_content, document_title=uploaded_file.name, metadata=doc.metadata)
+
+                    # Convert chunks (dicts) into LangChain Document objects
+                    for chunk in chunks:
+                        all_chunks.append(Document(page_content=chunk["content"], metadata=chunk["metadata"]))
 
             # Setup vector store for all chunks
             status.write("Creating combined vector store...")
             vector_store = VectorStore()
-            
             vector_store.create_vector_store(all_chunks)
 
             status.write("Setting up QA chain...")
