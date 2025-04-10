@@ -56,7 +56,7 @@ def process_documents(uploaded_files: list[UploadedFile]):
 
                     # Chunk the document using the custom DocumentChunker
                     status.write(f"Chunking document: {uploaded_file.name}... {doc.metadata}")
-                    chunks = chunker.chunk_document(doc.page_content, document_title=uploaded_file.name, metadata=doc.metadata)
+                    chunks = chunker.chunk_document(text=doc.page_content, document_title=uploaded_file.name, metadata=doc.metadata)
 
                     # Convert chunks (dicts) into LangChain Document objects
                     for chunk in chunks:
