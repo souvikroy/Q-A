@@ -47,6 +47,8 @@ def process_documents(uploaded_files: list[UploadedFile]):
                 loader = PyPDFLoader(temp_paths[-1])
                 documents = loader.load()
 
+                status.write(f"Chunking document: {uploaded_file.name}...")
+                
                 # Extract text from the documents
                 for doc in documents:
                     # Check if document_text is empty
@@ -55,7 +57,6 @@ def process_documents(uploaded_files: list[UploadedFile]):
                         continue
 
                     # Chunk the document using the custom DocumentChunker
-                    status.write(f"Chunking document: {uploaded_file.name}... {doc.metadata}")
                     chunks = chunker.chunk_document(text=doc.page_content, document_title=uploaded_file.name, metadata=doc.metadata)
 
                     # Convert chunks (dicts) into LangChain Document objects
@@ -162,11 +163,12 @@ def main():
                     if "source_documents" in result:
                         st.markdown("### 📚 Sources")
                         for doc in result["source_documents"]:
-                            print(doc.metadata)
+                            # print(doc.metadata)
                             with st.expander(f"Source from {doc.metadata.get('section', 'Document')}"):
                                 st.markdown(doc.page_content)
                                 st.markdown(f"*Page: {  doc.metadata.get('page', 'N/A')}*")
                                 st.markdown(f"*Document: {doc.metadata.get('title', 'N/A')}*")
+                                st.markdown(f"*IsProhibition: {doc.metadata.get('has_prohibitions', 'N/A')}*")
                     
                 except Exception as e:
                     st.error(f"Error getting answer: {str(e)}")
